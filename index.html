@@ -991,6 +991,7 @@
 
             init() {
                 this.cacheDOMElements();
+                this.initializeTheme();
                 this.bindEvents();
                 this.determineLanguage(); // Determine language first
                 this.loadTranslations().then(() => { // Load translations
