@@ -11,7 +11,6 @@
       对于最终的线上版本，推荐使用Tailwind CLI构建一个静态的CSS文件，并用 <link> 标签引入。
     -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class'
@@ -355,6 +354,10 @@
         body.dark .btn-secondary:hover {
             background-color: #6b7280;
         }
+        .controls .flex.items-center.gap-2:has(select) {
+            min-width: 160px;
+        }
+        
     </style>
 </head>
 
@@ -368,7 +371,7 @@
             <p class="text-gray-600 dark:text-gray-300 text-lg" data-i18n="header_subtitle"></p>
         </div>
 
-        <div class="controls backdrop-blur-md rounded-xl p-5 mb-8 flex flex-col gap-4 items-center justify-center shadow-lg border border-white border-opacity-20 animate-[slideUp_0.8s_ease]">
+        <div class="controls backdrop-blur-md rounded-xl p-5 mb-8 flex flex-wrap gap-4 items-center justify-center shadow-lg border border-white border-opacity-20 animate-[slideUp_0.8s_ease]">
             <div class="flex items-center gap-2">
                 <label for="lesson" class="font-semibold text-indigo-600 dark:text-indigo-400" data-i18n="label_lesson"></label>
                 <select id="lesson" class="p-2.5 rounded-lg border-2 border-indigo-300 dark:border-indigo-500 bg-white dark:bg-gray-700 text-base cursor-pointer transition-all duration-300 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-800"></select>
@@ -1650,10 +1653,10 @@
                         <ul class="text-left text-gray-600 dark:text-gray-300 leading-relaxed list-none list-inside">
                             <li>${_t('feature_1')}</li>
                             <li>${_t('feature_2')}</li>
+                            <li>${_t('feature_6')}</li>
                             <li>${_t('feature_3')}</li>
                             <li>${_t('feature_4')}</li>
                             <li>${_t('feature_5')}</li>
-                            <li>${_t('feature_6')}</li>
                             <li>${_t('feature_7')}</li>
                             <li>${_t('feature_8')}</li>
                             <li>${_t('feature_9')}</li>
