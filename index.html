@@ -810,16 +810,64 @@
             });
         },
         async initializeAppBasedOnURL() {
+            // 1. 将所有允许的等级和默认等级作为配置项，便于维护
+            const ALLOWED_LEVELS = ['n1', 'n2', 'n3', 'biaori', 'gaoji'];
+            const DEFAULT_LEVEL = 'n2';
+
+            /**
+             * [辅助函数] 从URL路径中提取有效的等级。
+             * @returns {string|null} 如果在路径中找到有效等级，则返回它，否则返回null。
+             */
+            const getLevelFromPath = () => {
+                // 假设你的URL结构可能是 domain.com/biaori/ 或 domain.com/app/n2.html
+                const path = (window.location.pathname + window.location.search).toLowerCase();
+                return ALLOWED_LEVELS.find(level => path.includes(level)) || null;
+            };
+            
+            // 2. 遵循清晰的优先级顺序来决定等级
             const urlParams = new URLSearchParams(window.location.search);
-            let determinedLevel = urlParams.get('level')?.toLowerCase() || 'n2';
-            if (!['n1', 'n2', 'n3', 'biaori', 'gaoji'].includes(determinedLevel)) {
-                console.warn(`Invalid level parameter '${determinedLevel}'. Defaulting to n2.`);
-                determinedLevel = 'n2';
+            const levelFromParam = urlParams.get('level')?.toLowerCase();
+            const levelFromPath = getLevelFromPath();
+
+            let determinedLevel = DEFAULT_LEVEL;
+
+            // 优先级 1: URL参数 (?level=...)
+            if (levelFromParam) {
+                if (ALLOWED_LEVELS.includes(levelFromParam)) {
+                    determinedLevel = levelFromParam;
+                } else {
+                    console.warn(`Invalid 'level' parameter: "${levelFromParam}". Using fallback logic.`);
+                    // 如果参数无效，则继续往下走，尝试从路径或默认值获取
+                    if (levelFromPath) {
+                        determinedLevel = levelFromPath;
+                    }
+                }
+            } 
+            // 优先级 2: URL路径 (e.g., /biaori/index.html)
+            else if (levelFromPath) {
+                determinedLevel = levelFromPath;
             }
+            // 优先级 3: 默认值 (如果以上都没有)
+            // (determinedLevel 初始值已设为 DEFAULT_LEVEL)
+            
+            console.log(`Determined level: ${determinedLevel}`);
+
+            // 3. 使用最终决定的等级来初始化应用
             this.state.currentJLPTLevel = determinedLevel.toUpperCase();
-            const mainTitleKey = { 'biaori': 'BIAORI', 'gaoji': 'GAOJI', 'n2': 'JLPT_N2', 'n1': 'JLPT_N1', 'n3': 'JLPT_N3' }[determinedLevel] || 'header_title';
+            
+            const mainTitleKeyMap = {
+                'BIAORI': 'BIAORI',
+                'GAOJI': 'GAOJI',
+                'N2': 'JLPT_N2',
+                'N1': 'JLPT_N1',
+                'N3': 'JLPT_N3'
+            };
+            const mainTitleKey = mainTitleKeyMap[this.state.currentJLPTLevel] || 'header_title';
             this.elements.mainTitle.textContent = _t(mainTitleKey);
-            await this.loadVocabularyData(`./data/${determinedLevel}.json`);
+
+            // [关键修改] 更新加载路径，指向 data/ 目录
+            const filePath = `./data/${determinedLevel}.json`;
+            await this.loadVocabularyData(filePath);
         },
         async loadVocabularyData(fileName) {
             try {
