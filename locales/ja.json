@@ -37,7 +37,7 @@
     "no_matching_words": "一致する単語がありません",
     "change_filter_or_add_words": "フィルター条件を変更するか、練習して新しい間違った単語を追加してください！",
     "wrong_word_meaning_prefix": "意味：",
-    "example_sentence_wrapper": "“{example}”",
+    "example_sentence_wrapper": "「{example}」",
     "wrong_word_count": "エラー {count} 回",
     "wrong_word_last_wrong_date": "最終エラー：{date}",
     "wrong_word_mastery_new": "新ミス",
