@@ -16,7 +16,7 @@
     "count_all": "全部",
     "btn_start_practice": "开始练习",
     "btn_wrong_words_notebook": "📚 错词本",
-    "keyboard_hint": "键盘: 1-4选择 | ←/→切换",
+    "keyboard_hint": "键盘: 1-4选择 | A/D 或 ←/→ 切换",
     "loading_data": "数据加载中...",
     "load_failed": "加载失败",
     "data_load_failed_message": "加载词汇数据（{fileName}）失败。",
@@ -33,6 +33,7 @@
     "wrong_words_export": "导出",
     "wrong_words_clear_all": "清空",
     "confirm_clear_wrong_words": "确定要清空所有错词记录吗？此操作不可撤销。",
+    "confirm_delete_word": "您确定要从错词本中删除单词“{word}”吗？",
     "no_matching_words": "没有符合条件的单词",
     "change_filter_or_add_words": "请更改筛选条件，或去练习添加新的错词吧！",
     "wrong_word_meaning_prefix": "含义：",
@@ -123,5 +124,8 @@
     "csv_header_difficulty": "难度",
     "csv_header_mastery": "掌握度",
     "csv_header_first_wrong_time": "首次错误时间",
-    "csv_header_last_wrong_time": "上次错误时间"
+    "csv_header_last_wrong_time": "上次错误时间",
+    "wwm_summary_words": "单词",
+    "wwm_summary_mistakes": "错误",
+    "wwm_summary_new": "新增"
 }

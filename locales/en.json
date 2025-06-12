@@ -16,7 +16,7 @@
     "count_all": "All",
     "btn_start_practice": "Start Practice",
     "btn_wrong_words_notebook": "📚 Wrong Words Notebook",
-    "keyboard_hint": "Keyboard: 1-4 to select | ←/→ to navigate",
+    "keyboard_hint": "Keyboard: 1-4 to select | A/D or ←/→ to navigate",
     "loading_data": "Loading data...",
     "load_failed": "Load Failed",
     "data_load_failed_message": "Failed to load vocabulary data ({fileName}).",
@@ -33,6 +33,7 @@
     "wrong_words_export": "Export",
     "wrong_words_clear_all": "Clear All",
     "confirm_clear_wrong_words": "Are you sure you want to clear all wrong word records? This operation is irreversible.",
+    "confirm_delete_word": "Are you sure you want to delete the word \"{word}\" from your notebook?",
     "no_matching_words": "No matching words found",
     "change_filter_or_add_words": "Please change the filter conditions, or practice to add new wrong words!",
     "wrong_word_meaning_prefix": "Meaning:",
@@ -123,5 +124,8 @@
     "csv_header_difficulty": "Difficulty",
     "csv_header_mastery": "Mastery",
     "csv_header_first_wrong_time": "First Wrong Time",
-    "csv_header_last_wrong_time": "Last Wrong Time"
+    "csv_header_last_wrong_time": "Last Wrong Time",
+    "wwm_summary_words": "Words",
+    "wwm_summary_mistakes": "Mistakes",
+    "wwm_summary_new": "New"
 }

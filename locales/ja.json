@@ -16,7 +16,7 @@
     "count_all": "全て",
     "btn_start_practice": "練習開始",
     "btn_wrong_words_notebook": "📚 錯詞本",
-    "keyboard_hint": "キーボード: 1-4で選択 | ←/→で切替",
+    "keyboard_hint": "キーボード: 1-4で選択 | A/D・←/→ で切替",
     "loading_data": "データ読込中...",
     "load_failed": "読込失敗",
     "data_load_failed_message": "語彙データ（{fileName}）の読み込みに失敗しました。",
@@ -33,6 +33,7 @@
     "wrong_words_export": "エクスポート",
     "wrong_words_clear_all": "すべてクリア",
     "confirm_clear_wrong_words": "すべての間違った単語の記録をクリアしてもよろしいですか？この操作は元に戻せません。",
+    "confirm_delete_word": "単語「{word}」を錯題ノートから削除してもよろしいですか？",
     "no_matching_words": "一致する単語がありません",
     "change_filter_or_add_words": "フィルター条件を変更するか、練習して新しい間違った単語を追加してください！",
     "wrong_word_meaning_prefix": "意味：",
@@ -123,5 +124,8 @@
     "csv_header_difficulty": "難易度",
     "csv_header_mastery": "習熟度",
     "csv_header_first_wrong_time": "初回エラー時間",
-    "csv_header_last_wrong_time": "最終エラー時間"
+    "csv_header_last_wrong_time": "最終エラー時間",
+    "wwm_summary_words": "単語",
+    "wwm_summary_mistakes": "ミス",
+    "wwm_summary_new": "新規"
 }
