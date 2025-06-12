@@ -9,7 +9,7 @@
       这种方式适合开发和测试。
       对于最终的线上版本，推荐使用Tailwind CLI构建一个静态的CSS文件，并用 <link> 标签引入。
     -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -755,7 +755,7 @@
         // The rest of the VocabularyApp object remains unchanged...
         // ... (all other functions from VocabularyApp are here)
         applyTranslations() { document.querySelectorAll('[data-i18n]').forEach(element => { const key = element.getAttribute('data-i18n'); const translation = _t(key); if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') { element.placeholder = translation; } else { element.innerHTML = translation; } }); document.title = _t('page_title'); this.modeSelect.setOptions([ { value: 'reading', label: _t('mode_reading') }, { value: 'meaning', label: _t('mode_meaning') }, { value: 'usage', label: _t('mode_usage') }, { value: 'mixed', label: _t('mode_mixed') } ]); this.difficultySelect.setOptions([ { value: '5', label: _t('count_5') }, { value: '10', label: _t('count_10') }, { value: '20', label: _t('count_20') }, { value: '30', label: _t('count_30') }, { value: 'all', label: _t('count_all') } ]); },
-        submitAnswer(selectedIndex) { if (this.state.isInputLocked) return; this.state.isInputLocked = true; clearInterval(this.state.timerInterval); const question = this.state.currentQuiz[this.state.currentQuestion]; const isCorrect = question.options[selectedIndex].correct; const timeSpent = Math.floor((Date.now() - this.state.questionStartTime) / 1000); this.state.answerLog.push({ questionIndex: this.state.currentQuestion, selectedOptionIndex: selectedIndex, isCorrect, timeSpent }); if (isCorrect) { this.state.score++; this.state.streak++; if (this.state.streak > this.state.maxStreak) this.state.maxStreak = this.state.streak; } else { this.state.streak = 0; this.state.wrongAnswers.push({ question: question.question, yourAnswer: question.options[selectedIndex].text, correctAnswer: question.correctAnswer, vocab: question.vocab }); WrongWordsManager.addOrUpdate(question.vocab, question.mode); } this.showQuestion(); this.state.nextQuestionTimeoutId = setTimeout(() => this.nextQuestion(), isCorrect ? 150 : 1800); },
+        submitAnswer(selectedIndex) { if (this.state.isInputLocked) return; this.state.isInputLocked = true; clearInterval(this.state.timerInterval); const question = this.state.currentQuiz[this.state.currentQuestion]; const isCorrect = question.options[selectedIndex].correct; const timeSpent = Math.floor((Date.now() - this.state.questionStartTime) / 1000); this.state.answerLog.push({ questionIndex: this.state.currentQuestion, selectedOptionIndex: selectedIndex, isCorrect, timeSpent }); if (isCorrect) { this.state.score++; this.state.streak++; if (this.state.streak > this.state.maxStreak) this.state.maxStreak = this.state.streak; } else { this.state.streak = 0; this.state.wrongAnswers.push({ question: question.question, yourAnswer: question.options[selectedIndex].text, correctAnswer: question.correctAnswer, vocab: question.vocab }); WrongWordsManager.addOrUpdate(question.vocab, question.mode); } this.showQuestion(); this.state.nextQuestionTimeoutId = setTimeout(() => this.nextQuestion(), isCorrect ? 800 : 1800); },
         showMessageBox(messageKey, replacements = {}) { this.elements.messageBoxText.textContent = _t(messageKey, replacements); this.elements.messageBoxButtons.innerHTML = `<button id="messageBoxOkBtn" class="glass-control bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-2 px-4">${_t('message_box_ok')}</button>`; this.elements.messageBox.classList.remove('hidden'); document.getElementById('messageBoxOkBtn').addEventListener('click', () => this.hideMessageBox(), { once: true }); document.getElementById('messageBoxOkBtn').focus(); },
         hideMessageBox() { this.elements.messageBox.classList.add('hidden'); },
         showConfirmation(messageKey, replacements = {}) { return new Promise(resolve => { this.elements.messageBoxText.textContent = _t(messageKey, replacements); this.elements.messageBoxButtons.innerHTML = `<button id="confirmBtn" class="glass-control bg-gradient-to-br from-red-500 to-orange-500 text-white py-2 px-4">${_t('confirm_btn')}</button><button id="cancelBtn" class="glass-control bg-gray-200 dark:bg-gray-600 py-2 px-4">${_t('cancel_btn')}</button>`; this.elements.messageBox.classList.remove('hidden'); const confirmBtn = document.getElementById('confirmBtn'); const cancelBtn = document.getElementById('cancelBtn'); const cleanup = () => { this.hideMessageBox(); confirmBtn.removeEventListener('click', onConfirm); cancelBtn.removeEventListener('click', onCancel); }; const onConfirm = () => { cleanup(); resolve(true); }; const onCancel = () => { cleanup(); resolve(false); }; confirmBtn.addEventListener('click', onConfirm); cancelBtn.addEventListener('click', onCancel); confirmBtn.focus(); }); },
@@ -764,7 +764,7 @@
         populateLessonSelect() { if (!this.lessonMultiSelect) return; const lessonKeys = Object.keys(this.state.allVocabulary).sort((a, b) => parseInt(a.replace('lesson', '')) - parseInt(b.replace('lesson', ''))); const options = [{ value: 'all', label: _t('count_all_lessons') }, ...lessonKeys.map(key => ({ value: key, label: key.replace('lesson', _t('label_lesson_short')) }))]; this.lessonMultiSelect.setOptions(options); },
         startQuiz() { if (Object.keys(this.state.allVocabulary).length === 0) { this.showMessageBox('no_words_for_lesson'); return; } const selectedLessons = this.lessonMultiSelect.getSelectedValues(); const selectedMode = this.modeSelect.getValue(); const difficulty = this.difficultySelect.getValue(); let sourceVocab = selectedLessons.includes('all') ? Object.values(this.state.allVocabulary).flat() : selectedLessons.flatMap(lesson => this.state.allVocabulary[lesson] || []); sourceVocab = sourceVocab.filter(item => typeof item === 'object' && item !== null && item.w); if (sourceVocab.length === 0) { this.showMessageBox('no_words_for_lesson'); return; } const questionCount = (difficulty === 'all') ? sourceVocab.length : Math.min(sourceVocab.length, parseInt(difficulty)); const quizVocab = this.shuffleArray(sourceVocab).slice(0, questionCount); this.initializeAndRunQuiz(quizVocab, selectedMode); },
         initializeAndRunQuiz(vocabList, mode) { if (!vocabList || vocabList.length === 0) { this.showMessageBox('no_words_for_practice'); return; } this.showLoadingScreen(); setTimeout(() => { const generatedQuestions = this.generateQuestions(vocabList, mode); if (generatedQuestions.length === 0) { this.showMessageBox('no_questions_generated'); this.resetQuiz(); return; } Object.assign(this.state, { currentQuiz: generatedQuestions, currentQuestion: 0, score: 0, streak: 0, maxStreak: 0, wrongAnswers: [], selectedAnswer: null, startTime: Date.now(), answerLog: [], maxQuestionReachedInSession: 0, }); this.elements.body.classList.add('quiz-mode-active'); this.elements.header.classList.add('hidden-during-quiz'); this.elements.controls.classList.add('hidden-during-quiz'); this.elements.quizContainer.classList.add('immersive-active'); this.showKeyboardHint(); this.showQuestion(); }, 50); },
-                generateQuestions(vocabList, mode) {
+        generateQuestions(vocabList, mode) {
             const allSourceVocabForOptions = this.shuffleArray(Object.values(this.state.allVocabulary).flat());
             let wrongOptionIndex = 0;
             const questions = vocabList.map(vocab => {
@@ -776,27 +776,11 @@
                     question = this.generateSingleQuestion(vocab, 'reading', 'w', 'r', allSourceVocabForOptions, wrongOptionIndex);
                 
                 } else if (currentMode === 'usage' && (vocab.u || vocab.e)) {
-                    
-                    // ===== START: 最终修复方案 =====
-                    // 1. 将所有可能的分隔符（全/半角斜杠、句号）统一替换为一个特殊标记
-                    // 2. 用这个标记分割字符串，并过滤掉因分割产生的空字符串
-                    const sentences = (vocab.u || vocab.e)
-                        .replace(/[／\/。]/g, '@@@')
-                        .split('@@@')
-                        .filter(s => s.trim() !== '');
-
-                    // 3. 如果处理后发现没有任何句子，则跳过这个词
-                    if (sentences.length === 0) {
-                        return null; 
-                    }
-
-                    // 4. 从所有有效的句子片段中，随机选择一个
-                    const chosenExample = sentences[Math.floor(Math.random() * sentences.length)].trim();
-                    // ===== END: 最终修复方案 =====
-                    
-                    const questionText = chosenExample.replace(vocab.w, '＿＿＿＿') + '。';
+                    const sourceString = (vocab.u || vocab.e).trim();
+                    const questionText = ((qs) => qs.length ? qs[Math.floor(Math.random() * qs.length)] : null)(((sourceString.match(/___/g) || []).length > 1 ? sourceString.split(/(?<=。)/) : [sourceString]).map(q => q.trim()).filter(Boolean));
+                    if (!questionText) return null;
                     question = this.generateSingleQuestion(vocab, 'usage', questionText, 'w', allSourceVocabForOptions, wrongOptionIndex);
-
+                
                 } else {
                     const questionText = `${vocab.w}${vocab.r && vocab.w !== vocab.r ? ` (${vocab.r})` : ''}`;
                     question = this.generateSingleQuestion(vocab, 'meaning', questionText, meaningKey, allSourceVocabForOptions, wrongOptionIndex);
