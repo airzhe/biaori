@@ -37,7 +37,7 @@
     "no_matching_words": "No matching words found",
     "change_filter_or_add_words": "Please change the filter conditions, or practice to add new wrong words!",
     "wrong_word_meaning_prefix": "Meaning:",
-    "wrong_word_example_prefix": "“{example}”",
+    "example_sentence_wrapper": "“{example}”",
     "wrong_word_count": "{count} mistakes",
     "wrong_word_last_wrong_date": "Last: {date}",
     "wrong_word_mastery_new": "New",
