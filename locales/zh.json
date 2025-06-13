@@ -127,5 +127,11 @@
     "csv_header_last_wrong_time": "上次错误时间",
     "wwm_summary_words": "单词",
     "wwm_summary_mistakes": "错误",
-    "wwm_summary_new": "新增"
+    "wwm_summary_new": "新增",
+    "wwm_summary_new": "生词数",
+    "wrong_word_edit_mastery_title": "点击更改熟练度",
+    "wrong_word_edit_difficulty_title": "点击更改难度",
+    "detailed_info_title": "答案详情",
+    "detailed_info_meaning_prefix": "意思：",
+    "detailed_info_example_prefix": "例句："
 }

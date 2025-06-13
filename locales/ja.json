@@ -127,5 +127,11 @@
     "csv_header_last_wrong_time": "最終エラー時間",
     "wwm_summary_words": "単語",
     "wwm_summary_mistakes": "ミス",
-    "wwm_summary_new": "新規"
+    "wwm_summary_new": "新規",
+    "wwm_summary_words": "単語数",
+   "wrong_word_edit_mastery_title": "クリックして習熟度を変更",
+   "wrong_word_edit_difficulty_title": "クリックして難易度を変更",
+   "detailed_info_title": "解答の詳細",
+   "detailed_info_meaning_prefix": "意味：",
+   "detailed_info_example_prefix": "例文："
 }

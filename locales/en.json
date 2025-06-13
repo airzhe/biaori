@@ -127,5 +127,10 @@
     "csv_header_last_wrong_time": "Last Wrong Time",
     "wwm_summary_words": "Words",
     "wwm_summary_mistakes": "Mistakes",
-    "wwm_summary_new": "New"
+    "wwm_summary_new": "New",
+    "wrong_word_edit_mastery_title": "Click to change mastery level",
+    "wrong_word_edit_difficulty_title": "Click to change difficulty level",
+    "detailed_info_title": "Answer Details",
+    "detailed_info_meaning_prefix": "Meaning: ",
+    "detailed_info_example_prefix": "Example: "
 }
