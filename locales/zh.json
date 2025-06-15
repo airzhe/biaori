@@ -32,7 +32,7 @@
     "wrong_words_start_practice": "开始学习",
     "wrong_words_export": "导出",
     "wrong_words_clear_all": "清空",
-    "confirm_clear_wrong_words": "确定要清空所有错词记录吗？此操作不可撤销。",
+    "confirm_clear_wrong_words": "确定要删除当前筛选出的 {count} 个单词吗？此操作无法撤销",
     "confirm_delete_word": "您确定要从错词本中删除单词“{word}”吗？",
     "no_matching_words": "没有符合条件的单词",
     "change_filter_or_add_words": "请更改筛选条件，或去练习添加新的错词吧！",
@@ -128,10 +128,12 @@
     "wwm_summary_words": "单词",
     "wwm_summary_mistakes": "错误",
     "wwm_summary_new": "新增",
-    "wwm_summary_new": "生词数",
     "wrong_word_edit_mastery_title": "点击更改熟练度",
     "wrong_word_edit_difficulty_title": "点击更改难度",
     "detailed_info_title": "答案详情",
     "detailed_info_meaning_prefix": "意思：",
-    "detailed_info_example_prefix": "例句："
+    "detailed_info_example_prefix": "例句：",
+    "status_correct": "正解",
+    "status_selected": "选择", 
+    "status_option": "选项"
 }

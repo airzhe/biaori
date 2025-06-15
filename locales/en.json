@@ -32,7 +32,7 @@
     "wrong_words_start_practice": "Start Learning",
     "wrong_words_export": "Export",
     "wrong_words_clear_all": "Clear All",
-    "confirm_clear_wrong_words": "Are you sure you want to clear all wrong word records? This operation is irreversible.",
+    "confirm_clear_wrong_words": "Are you sure you want to delete the {count} filtered words? This action cannot be undone.",
     "confirm_delete_word": "Are you sure you want to delete the word \"{word}\" from your notebook?",
     "no_matching_words": "No matching words found",
     "change_filter_or_add_words": "Please change the filter conditions, or practice to add new wrong words!",
@@ -132,5 +132,8 @@
     "wrong_word_edit_difficulty_title": "Click to change difficulty level",
     "detailed_info_title": "Answer Details",
     "detailed_info_meaning_prefix": "Meaning: ",
-    "detailed_info_example_prefix": "Example: "
+    "detailed_info_example_prefix": "Example: ",
+    "status_correct": "Correct",
+    "status_selected": "Selected",
+    "status_option": "Option"
 }

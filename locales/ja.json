@@ -32,7 +32,7 @@
     "wrong_words_start_practice": "勉強を始める",
     "wrong_words_export": "エクスポート",
     "wrong_words_clear_all": "すべてクリア",
-    "confirm_clear_wrong_words": "すべての間違った単語の記録をクリアしてもよろしいですか？この操作は元に戻せません。",
+    "confirm_clear_wrong_words": "現在フィルターされている {count} 個の単語を削除しますか？この操作は取り消せません。",
     "confirm_delete_word": "単語「{word}」を錯題ノートから削除してもよろしいですか？",
     "no_matching_words": "一致する単語がありません",
     "change_filter_or_add_words": "フィルター条件を変更するか、練習して新しい間違った単語を追加してください！",
@@ -128,10 +128,13 @@
     "wwm_summary_words": "単語",
     "wwm_summary_mistakes": "ミス",
     "wwm_summary_new": "新規",
-    "wwm_summary_words": "単語数",
    "wrong_word_edit_mastery_title": "クリックして習熟度を変更",
    "wrong_word_edit_difficulty_title": "クリックして難易度を変更",
    "detailed_info_title": "解答の詳細",
    "detailed_info_meaning_prefix": "意味：",
-   "detailed_info_example_prefix": "例文："
+   "detailed_info_example_prefix": "例文：",
+   "status_correct": "正解",
+   "status_selected": "選択",
+   "status_option": "選択肢"
+   
 }
