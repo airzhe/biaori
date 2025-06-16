@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title data-i18n="page_title"></title>
-    <!-- 
-      说明: 为了方便您在本地直接打开并看到效果，我们暂时使用Tailwind的JIT脚本。
-      这种方式适合开发和测试。
-      对于最终的线上版本，推荐使用Tailwind CLI构建一个静态的CSS文件，并用 <link> T标签引入。
-    -->
-    <!-- FIX: 修正了错误的Tailwind脚本路径，使用了正确的CDN链接 -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <!---
+    <script src="../tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -32,6 +28,7 @@
         }
     </script>
     <link rel="stylesheet" href="./input.css">
+    -->
 </head>
 
 <body class="min-h-screen text-gray-800 dark:text-gray-200 relative">

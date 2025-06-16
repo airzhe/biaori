@@ -150,7 +150,6 @@ body {
 }
 
 .glass-control {
-    color: var(--body-text-color);
     border: 1px solid var(--glass-control-border);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -208,6 +207,7 @@ body.dark .glass-control:focus-within {
     overflow: hidden;
     cursor: pointer;
     white-space: nowrap;
+    color: var(--body-text-color);
 }
 
 .custom-select-text {
