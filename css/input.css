@@ -4,7 +4,8 @@
 
 /* 1. Global Variables & Theming */
 :root {
-    --body-bg-gradient: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+    --body-bg-gradient: linear-gradient(135deg, #c7d2fe 0%, #e0e7ff 100%);
+    --body-bg-gradient: linear-gradient(135deg,#a1c4fd,#c2e9fb);
     --body-text-color: #1f2937;
     --glass-pane-bg-fallback: rgba(255, 255, 255, 0.45);
     --glass-pane-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.3) 100%);
@@ -16,7 +17,7 @@
     --glass-control-border: rgba(255, 255, 255, 0.5);
     --glass-control-hover-bg: rgba(255, 255, 255, 0.5);
     --glass-control-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --gradient-text-bg: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+    --gradient-text-bg: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899);
     --accent-color: #6366f1;
     --progress-bar-bg: rgba(255, 255, 255, 0.4);
     --progress-fill-bg: var(--gradient-text-bg);
@@ -42,13 +43,13 @@ body.dark {
     --glass-control-border: rgba(55, 65, 81, 0.6);
     --glass-control-hover-bg: rgba(55, 65, 81, 0.5);
     --glass-control-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --gradient-text-bg: linear-gradient(45deg, #38bdf8, #818cf8, #e879f9);
+    --gradient-text-bg: linear-gradient(45deg, #6366f1, #7c3aed, #e879f9);
     --progress-bar-bg: rgba(17, 24, 39, 0.8);
     --feedback-green-text: #22c55e;
     --feedback-red-text: #f87171;
     --feedback-green-bg: #166534;
     --feedback-red-bg: #991B1B;
-    --accent-color: #60a5fa;
+    --accent-color: #6366f1;
     --selected-option-bg: #4f46e5;
     --selected-option-text: #e0e7ff;
     --panel-handle-bg: rgba(255, 255, 255, 0.2);
@@ -515,7 +516,7 @@ body.quiz-mode-active main.container {
 /* Modal & Pop-up Styles */
 #messageBox>div,
 #wrongWordsModal>div {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%);
+    background: linear-gradient(135deg, hsla(220, 40%, 99%, 0.98), hsla(240, 30%, 97%, 0.95));
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.5);

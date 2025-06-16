@@ -273,14 +273,14 @@ const WrongWordsManager = {
     updateCardUI(cardElement, wordData) {
         if (!cardElement || !wordData) return;
         const masteryInfo = {
-            new: { text: _t('wrong_word_mastery_new'), classes: 'bg-wwm-blue/10 text-wwm-blue dark:bg-wwm-blue/20 dark:text-blue-300' },
-            learning: { text: _t('wrong_word_mastery_learning'), classes: 'bg-wwm-purple/10 text-wwm-purple dark:bg-wwm-purple/20 dark:text-purple-300' },
-            familiar: { text: _t('wrong_word_mastery_familiar'), classes: 'bg-wwm-green/20 text-wwm-green dark:bg-wwm-green/30 dark:text-green-300' }
+            new: { text: _t('wrong_word_mastery_new'), classes: 'bg-bg-blue-600/10 text-blue-600 dark:bg-bg-blue-600/20 dark:text-blue-300' },
+            learning: { text: _t('wrong_word_mastery_learning'), classes: 'bg-bg-violet-600/10 text-violet-600 dark:bg-bg-violet-600/20 dark:text-purple-300' },
+            familiar: { text: _t('wrong_word_mastery_familiar'), classes: 'bg-bg-emerald-600/20 text-emerald-600 dark:bg-bg-emerald-600/30 dark:text-green-300' }
         };
         const difficultyInfo = {
             1: { text: _t('wrong_word_difficulty', {level: 1}), classes: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' }, 2: { text: _t('wrong_word_difficulty', {level: 2}), classes: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' }, 3: { text: _t('wrong_word_difficulty', {level: 3}), classes: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400' }, 4: { text: _t('wrong_word_difficulty', {level: 4}), classes: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400' }, 5: { text: _t('wrong_word_difficulty', {level: 5}), classes: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' }
         };
-        const baseBadgeClasses = 'wwm-card-badge border-0 transition-transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-wwm-primary';
+        const baseBadgeClasses = 'wwm-card-badge border-0 transition-transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bg-indigo-500';
         const masteryButton = cardElement.querySelector('[data-field="masteryBadge"]');
         const mInfo = masteryInfo[wordData.masteryLevel];
         if(masteryButton && mInfo) { masteryButton.className = `${baseBadgeClasses} ${mInfo.classes}`; masteryButton.textContent = mInfo.text; }
@@ -338,9 +338,9 @@ const WrongWordsManager = {
         }
         
         const masteryInfo = {
-            new: { text: _t('wrong_word_mastery_new'), classes: 'bg-wwm-blue/10 text-wwm-blue dark:bg-wwm-blue/20 dark:text-blue-300' },
-            learning: { text: _t('wrong_word_mastery_learning'), classes: 'bg-wwm-purple/10 text-wwm-purple dark:bg-wwm-purple/20 dark:text-purple-300' },
-            familiar: { text: _t('wrong_word_mastery_familiar'), classes: 'bg-wwm-green/20 text-wwm-green dark:bg-wwm-green/30 dark:text-green-300' }
+            new: { text: _t('wrong_word_mastery_new'), classes: 'bg-bg-blue-600/10 text-blue-600 dark:bg-bg-blue-600/20 dark:text-blue-300' },
+            learning: { text: _t('wrong_word_mastery_learning'), classes: 'bg-bg-violet-600/10 text-violet-600 dark:bg-bg-violet-600/20 dark:text-purple-300' },
+            familiar: { text: _t('wrong_word_mastery_familiar'), classes: 'bg-bg-emerald-600/20 text-emerald-600 dark:bg-bg-emerald-600/30 dark:text-green-300' }
         };
         const difficultyInfo = {
             1: { text: _t('wrong_word_difficulty', {level: 1}), classes: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300' }, 2: { text: _t('wrong_word_difficulty', {level: 2}), classes: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' }, 3: { text: _t('wrong_word_difficulty', {level: 3}), classes: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400' }, 4: { text: _t('wrong_word_difficulty', {level: 4}), classes: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400' }, 5: { text: _t('wrong_word_difficulty', {level: 5}), classes: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' }
@@ -552,7 +552,7 @@ const VocabularyApp = {
             if (buttons.length === 0) {
                 buttons.push({
                     textKey: 'message_box_ok',
-                    classes: 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white',
+                    classes: 'from-indigo-500 to-purple-600 text-white',
                     value: true
                 });
             }
