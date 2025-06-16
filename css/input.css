@@ -43,7 +43,7 @@ body.dark {
     --glass-control-border: rgba(55, 65, 81, 0.6);
     --glass-control-hover-bg: rgba(55, 65, 81, 0.5);
     --glass-control-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --gradient-text-bg: linear-gradient(45deg, #6366f1, #7c3aed, #e879f9);
+    --gradient-text-bg: linear-gradient(45deg,#3b82f6,#8b5cf6,#ec4899);
     --progress-bar-bg: rgba(17, 24, 39, 0.8);
     --feedback-green-text: #22c55e;
     --feedback-red-text: #f87171;
