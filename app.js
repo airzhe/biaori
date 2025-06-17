@@ -816,7 +816,7 @@ const VocabularyApp = {
     
     bindQuizViewEvents(question, historyEntry) { 
         this.elements.quizContainer.querySelector('.exit-btn').addEventListener('click', () => this.resetQuiz()); 
-        const exampleSentence = question.vocab.e || question.vocab.u; 
+        const exampleSentence = question.vocab.e; 
         if (exampleSentence) { 
             const questionTextEl = this.elements.quizContainer.querySelector('#questionText'); 
             questionTextEl.style.cursor = 'pointer'; questionTextEl.title = _t('quiz_example_hint'); 
