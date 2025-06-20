@@ -469,6 +469,81 @@ const VocabularyApp = {
         this.elements.quizContainer.addEventListener('touchmove', e => this.handleTouchMove(e), { passive: false });
         this.elements.quizContainer.addEventListener('touchend', e => this.handleTouchEnd(e), { passive: true });
         document.addEventListener('click', () => this.closeAllSelects());
+
+        // --- MODIFIED: Event delegation for quiz interactions ---
+        this.elements.quizContainer.addEventListener('click', (e) => {
+            // Only handle events when quiz is active
+            if (!this.elements.body.classList.contains('quiz-mode-active')) return;
+
+            // 1. Handle exit button
+            if (e.target.closest('.exit-btn')) {
+                this.resetQuiz();
+                return;
+            }
+
+            // 2. Handle answer option clicks
+            const optionBtn = e.target.closest('.option');
+            if (optionBtn && !this.state.isInputLocked) {
+                this.submitAnswer(parseInt(optionBtn.dataset.index, 10));
+                return;
+            }
+
+            // 3. Handle clicking question to show example
+            const questionData = this.state.currentQuiz[this.state.currentQuestion];
+            if (e.target.closest('#questionText') && questionData?.vocab?.e) {
+                const sentenceDisplay = this.elements.quizContainer.querySelector('#exampleSentenceDisplay');
+                if (sentenceDisplay) {
+                    sentenceDisplay.textContent = _t('example_sentence_wrapper', { example: questionData.vocab.e });
+                    sentenceDisplay.classList.toggle('visible');
+                }
+                return;
+            }
+
+            // 4. Handle playing audio from detailed info panel
+            const detailedItem = e.target.closest('.detailed-info-item[data-w]');
+            if (detailedItem) {
+                this.playWordAudio(detailedItem.dataset.w);
+                return;
+            }
+            
+            // 5. Handle detailed info panel UI
+            const detailedInfoPanel = this.elements.quizContainer.querySelector('#detailedInfoPanel');
+            if (e.target.closest('#swipeUpIndicator')) {
+                detailedInfoPanel?.classList.toggle('visible');
+                return;
+            }
+            if (e.target.closest('#panelHandle')) {
+                detailedInfoPanel?.classList.remove('visible');
+                return;
+            }
+        });
+    },
+
+    // --- NEW: Helper function to play word audio ---
+    playWordAudio(word) {
+        // 1. 定义一个当前支持音频的级别列表
+        const supportedLevels = ['n2']; // 将来支持了 N1，就改成 ['n1', 'n2']
+        // 2. 获取当前级别
+        const currentLevel = this.state.currentJLPTLevel.toLowerCase();
+        // 3. 检查当前级别是否在支持列表中
+        if (!supportedLevels.includes(currentLevel)) {
+            // 如果不支持，直接返回，什么也不做
+            console.log(`Audio playback is not yet supported for level: ${currentLevel}`);
+            return; 
+        }
+        let audioPlayer = document.getElementById('audioPlayer');
+        if (!audioPlayer) {
+            audioPlayer = document.createElement('audio');
+            audioPlayer.id = 'audioPlayer';
+            audioPlayer.style.display = 'none';
+            document.body.appendChild(audioPlayer);
+        }
+        const audioPath = `data/audio/${level}/${word}.mp3`;
+        audioPlayer.src = audioPath;
+        audioPlayer.play().catch(error => {
+            console.warn(`Could not play audio for "${word}". File might be missing.`, error);
+            // Optionally, show a small visual feedback to the user that audio failed
+        });
     },
 
     determineLanguage() {
@@ -572,7 +647,6 @@ const VocabularyApp = {
                     resolve(JSON.parse(button.dataset.value));
                 }
             };
-            // Use event delegation on the container
             this.elements.messageBoxButtons.addEventListener('click', handleClick, { once: true });
             this.elements.messageBoxButtons.querySelector('button')?.focus();
         });
@@ -772,8 +846,11 @@ const VocabularyApp = {
                 <h3 class="text-xl font-bold mb-4 text-slate-800 dark:text-slate-200 text-center">${_t('detailed_info_title')}</h3>
                 <div class="space-y-3 overflow-y-auto">${this.createDetailedInfoContent(question)}</div>
             </div>` : '';
+        
+        const questionTextCursorClass = question.vocab.e ? 'cursor-pointer' : '';
+        const questionTextTitle = question.vocab.e ? _t('quiz_example_hint') : '';
 
-        return ` <div class="w-full h-full flex flex-col"> <button class="exit-btn interactive-press-effect absolute top-3 right-3 w-10 h-10 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 text-gray-700 dark:text-gray-300 flex items-center justify-center rounded-full text-xl font-semibold z-50 transition hover:scale-110">✕</button> <div class="mb-3 md:mb-8"> <div class="flex justify-between mb-2 font-semibold text-violet-600 dark:text-violet-500"> <span>${_t('quiz_progress', { current: this.state.currentQuestion + 1, total: this.state.currentQuiz.length })}</span> </div> <div class="progress-bar w-full h-2.5 rounded-md overflow-hidden relative"><div class="progress-fill h-full rounded-md" style="width: ${progress}%"></div></div> </div> <div class="stats flex justify-between mb-3 md:mb-5 text-sm md:text-lg font-semibold flex-wrap gap-x-4 gap-y-2"> <span class="flex items-center gap-2 text-green-600 dark:text-green-500"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> ${_t('quiz_correct')} ${this.state.score} </span> <span class="flex items-center gap-2 text-amber-600 dark:text-amber-500"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg> ${_t('quiz_streak')} ${this.state.streak} </span> <span class="flex items-center gap-2 text-blue-600 dark:text-blue-500"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg> ${_t('quiz_elapsed')} <span id="timer">${historyEntry ? historyEntry.timeSpent : 0}</span>${_t('quiz_seconds')} </span> </div> <div class="question-area-wrapper"> <div class="question-content-area"> <div class="question text-3xl md:text-5xl mb-1 md:mb-2 font-semibold text-center leading-tight text-slate-800 dark:text-slate-200" id="questionText">${question.question}</div> <div id="exampleSentenceDisplay" class="text-lg px-2 text-slate-600 dark:text-slate-400"></div> </div> </div> <div class="options grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4"> <div id="inlineFeedback" class="inline-feedback-area ${feedbackHTML.trim() ? `show ${feedbackClass}` : ''}" aria-live="polite">${feedbackHTML}</div> ${optionsHTML} </div> </div> ${detailedInfoHTML}`; 
+        return ` <div class="w-full h-full flex flex-col"> <button class="exit-btn interactive-press-effect absolute top-3 right-3 w-10 h-10 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 text-gray-700 dark:text-gray-300 flex items-center justify-center rounded-full text-xl font-semibold z-50 transition hover:scale-110">✕</button> <div class="mb-3 md:mb-8"> <div class="flex justify-between mb-2 font-semibold text-violet-600 dark:text-violet-500"> <span>${_t('quiz_progress', { current: this.state.currentQuestion + 1, total: this.state.currentQuiz.length })}</span> </div> <div class="progress-bar w-full h-2.5 rounded-md overflow-hidden relative"><div class="progress-fill h-full rounded-md" style="width: ${progress}%"></div></div> </div> <div class="stats flex justify-between mb-3 md:mb-5 text-sm md:text-lg font-semibold flex-wrap gap-x-4 gap-y-2"> <span class="flex items-center gap-2 text-green-600 dark:text-green-500"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> ${_t('quiz_correct')} ${this.state.score} </span> <span class="flex items-center gap-2 text-amber-600 dark:text-amber-500"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg> ${_t('quiz_streak')} ${this.state.streak} </span> <span class="flex items-center gap-2 text-blue-600 dark:text-blue-500"> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg> ${_t('quiz_elapsed')} <span id="timer">${historyEntry ? historyEntry.timeSpent : 0}</span>${_t('quiz_seconds')} </span> </div> <div class="question-area-wrapper"> <div class="question-content-area"> <div class="question text-3xl md:text-5xl mb-1 md:mb-2 font-semibold text-center leading-tight text-slate-800 dark:text-slate-200 ${questionTextCursorClass}" id="questionText" title="${questionTextTitle}">${question.question}</div> <div id="exampleSentenceDisplay" class="text-lg px-2 text-slate-600 dark:text-slate-400"></div> </div> </div> <div class="options grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 md:gap-4"> <div id="inlineFeedback" class="inline-feedback-area ${feedbackHTML.trim() ? `show ${feedbackClass}` : ''}" aria-live="polite">${feedbackHTML}</div> ${optionsHTML} </div> </div> ${detailedInfoHTML}`; 
     },
     
     _getOptionStatusInfo(option, index, historyEntry) {
@@ -786,6 +863,7 @@ const VocabularyApp = {
         return { icon: `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-500 text-white">${_t('status_option')}</span>`, borderColor: 'border-slate-200' };
     },
 
+    // --- MODIFIED: Added data-w and cursor-pointer for audio playback ---
     createDetailedInfoContent(question) {
         const historyEntry = this.state.answerLog.find(log => log.questionIndex === this.state.currentQuestion);
         if (!historyEntry) return '';
@@ -801,12 +879,13 @@ const VocabularyApp = {
                 ? `${vocab.w}<span class="text-base font-normal text-slate-500 dark:text-slate-400 ml-2">(${vocab.r})</span>`
                 : vocab.w;
             return `
-                <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border-l-4 ${borderColor} shadow-lg hover:shadow-xl transition-all duration-300">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border-l-4 ${borderColor} shadow-lg hover:shadow-xl transition-all duration-300 detailed-info-item cursor-pointer"
+                     data-w="${vocab.w}">
                     <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">${wordReadingHTML}</h3>
-                        <span class="rounded-lg flex items-center justify-center bg-green-100 dark:bg-green-900/30">${icon}</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white pointer-events-none">${wordReadingHTML}</h3>
+                        <span class="rounded-lg flex items-center justify-center bg-green-100 dark:bg-green-900/30 pointer-events-none">${icon}</span>
                     </div>
-                    <div class="space-y-1 text-sm">
+                    <div class="space-y-1 text-sm pointer-events-none">
                         <div class="flex"><span class="text-gray-500 dark:text-gray-400 w-12 flex-shrink-0">${_t('detailed_info_meaning_prefix')}</span><span class="text-gray-900 dark:text-white">${vocab[meaningKey] || vocab.c || vocab.m}</span></div>
                         ${exampleSentence ? `<div class="flex"><span class="text-gray-500 dark:text-gray-400 w-12 flex-shrink-0">${_t('detailed_info_example_prefix')}</span><span class="text-gray-900 dark:text-white">${exampleSentence}</span></div>` : ''}
                     </div>
@@ -814,30 +893,13 @@ const VocabularyApp = {
         }).join('');
     },
     
+    // --- MODIFIED: Simplified by moving logic to bindEvents ---
     bindQuizViewEvents(question, historyEntry) { 
-        this.elements.quizContainer.querySelector('.exit-btn').addEventListener('click', () => this.resetQuiz()); 
-        const exampleSentence = question.vocab.e; 
-        if (exampleSentence) { 
-            const questionTextEl = this.elements.quizContainer.querySelector('#questionText'); 
-            questionTextEl.style.cursor = 'pointer'; questionTextEl.title = _t('quiz_example_hint'); 
-            questionTextEl.addEventListener('click', () => { 
-                const sentenceDisplay = this.elements.quizContainer.querySelector('#exampleSentenceDisplay'); 
-                sentenceDisplay.textContent = _t('example_sentence_wrapper', { example: exampleSentence }); 
-                sentenceDisplay.classList.toggle('visible'); 
-            }); 
-        } 
+        // Most event handling is now done via delegation in `bindEvents`.
+        // This function is now only for logic that MUST run on every question view update.
         if (!historyEntry) { 
-            this.updateTimer(); 
-            this.elements.quizContainer.querySelector('.options').addEventListener('click', e => { 
-                const button = e.target.closest('.option'); 
-                if (button && !this.state.isInputLocked) this.submitAnswer(parseInt(button.dataset.index, 10)); 
-            }); 
+            this.updateTimer(); // The timer needs to be started for each new question.
         }
-        const swipeUpIndicator = this.elements.quizContainer.querySelector('#swipeUpIndicator');
-        const detailedInfoPanel = this.elements.quizContainer.querySelector('#detailedInfoPanel');
-        const panelHandle = this.elements.quizContainer.querySelector('#panelHandle');
-        if (swipeUpIndicator && detailedInfoPanel) swipeUpIndicator.addEventListener('click', () => detailedInfoPanel.classList.toggle('visible'));
-        if (panelHandle && detailedInfoPanel) panelHandle.addEventListener('click', () => detailedInfoPanel.classList.remove('visible'));
     },
     
     nextQuestion() { 
