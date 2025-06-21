@@ -886,8 +886,14 @@ const VocabularyApp = {
                         <span class="rounded-lg flex items-center justify-center bg-green-100 dark:bg-green-900/30 pointer-events-none">${icon}</span>
                     </div>
                     <div class="space-y-1 text-sm pointer-events-none">
-                        <div class="flex"><span class="text-gray-500 dark:text-gray-400 w-12 flex-shrink-0">${_t('detailed_info_meaning_prefix')}</span><span class="text-gray-900 dark:text-white">${vocab[meaningKey] || vocab.c || vocab.m}</span></div>
-                        ${exampleSentence ? `<div class="flex"><span class="text-gray-500 dark:text-gray-400 w-12 flex-shrink-0">${_t('detailed_info_example_prefix')}</span><span class="text-gray-900 dark:text-white">${exampleSentence}</span></div>` : ''}
+                        <div class="grid grid-cols-[auto_1fr] gap-2">
+                            <span class="text-gray-500 dark:text-gray-400">${_t('detailed_info_meaning_prefix')}</span>
+                            <span class="text-gray-900 dark:text-white">${vocab[meaningKey] || vocab.c || vocab.m}</span>
+                        </div>
+                        ${exampleSentence ? `<div class="grid grid-cols-[auto_1fr] gap-2">
+                            <span class="text-gray-500 dark:text-gray-400">${_t('detailed_info_example_prefix')}</span>
+                            <span class="text-gray-900 dark:text-white">${exampleSentence}</span>
+                        </div>` : ''}
                     </div>
                 </div>`;
         }).join('');
