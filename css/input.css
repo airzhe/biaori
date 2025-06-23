@@ -736,3 +736,9 @@ body.dark #wrongWordsModal>div {
 .rounded-full{
     border-radius: 9999px;
 }
+
+/* 也许你的按钮已经使用了 flex 布局，那就更简单了 */
+#messageBoxButtons button {
+    min-width: 100px;
+    /* 你现有的样式中可能已经有 justify-center 了，如果没有就加上 */
+}

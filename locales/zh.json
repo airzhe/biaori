@@ -24,6 +24,7 @@
     "no_words_for_practice": "没有可供练习的单词。",
     "no_questions_generated": "无法用所选单词生成问题。",
     "message_box_ok": "确定",
+    "confirm_exit_quiz": "确定要退出本次练习吗？当前的进度将不会被保存。",
     "confirm_btn": "确定",
     "cancel_btn": "取消",
     "wrong_words_modal_title": "错词本管理",

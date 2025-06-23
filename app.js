@@ -471,19 +471,31 @@ const VocabularyApp = {
         document.addEventListener('click', () => this.closeAllSelects());
 
         // --- MODIFIED: Event delegation for quiz interactions ---
-        this.elements.quizContainer.addEventListener('click', (e) => {
+        this.elements.quizContainer.addEventListener('click', async (e) => { 
             // Only handle events when quiz is active
             if (!this.elements.body.classList.contains('quiz-mode-active')) return;
 
             // 1. Handle exit button
             if (e.target.closest('.exit-btn')) {
-                this.resetQuiz();
+                const confirmed = await this.showConfirmation('confirm_exit_quiz'); 
+                if (confirmed) {
+                    this.resetQuiz();
+                }
                 return;
             }
 
             // 2. Handle answer option clicks
             const optionBtn = e.target.closest('.option');
             if (optionBtn && !this.state.isInputLocked) {
+                // 获取当前问题的数据,以便检查其模式
+                const currentQuestionData = this.state.currentQuiz[this.state.currentQuestion];
+                const wordToPlay = optionBtn.dataset.word;
+
+                // 只有在当前问题是 "reading" 模式时,才播放音频
+                if (wordToPlay) {
+                    this.playWordAudio(wordToPlay);
+                }
+                
                 this.submitAnswer(parseInt(optionBtn.dataset.index, 10));
                 return;
             }
@@ -538,7 +550,7 @@ const VocabularyApp = {
             audioPlayer.style.display = 'none';
             document.body.appendChild(audioPlayer);
         }
-        const audioPath = `data/audio/${level}/${word}.mp3`;
+        const audioPath = `data/audio/${currentLevel}/${word}.mp3`;
         audioPlayer.src = audioPath;
         audioPlayer.play().catch(error => {
             console.warn(`Could not play audio for "${word}". File might be missing.`, error);
@@ -633,7 +645,7 @@ const VocabularyApp = {
             }
     
             const buttonHtml = buttons.map(btn => 
-                `<button class="glass-control py-2 px-4 interactive-press-effect ${btn.classes}" data-value="${btn.value}">${_t(btn.textKey)}</button>`
+                `<button class="modal-action-btn glass-control py-2 px-4 interactive-press-effect ${btn.classes}" data-value="${btn.value}">${_t(btn.textKey)}</button>`
             ).join('');
     
             this.elements.messageBoxButtons.innerHTML = buttonHtml;
@@ -826,7 +838,7 @@ const VocabularyApp = {
                 if (option.correct) { stateClasses += ' !bg-green-600 !text-white !border-green-700'; textClasses = '!text-white font-medium'; numberClasses = '!text-white font-bold mr-3'; } 
                 else if (index === historyEntry.selectedOptionIndex) { stateClasses += ' !bg-red-600 !text-white !border-red-700 animate-[incorrectShake_0.3s_ease]'; textClasses = '!text-white font-medium'; numberClasses = '!text-white font-bold mr-3'; } 
             } 
-            return `<button class="${baseClasses} ${stateClasses}" data-index="${index}" ${historyEntry ? 'disabled' : ''}><span class="${numberClasses}">${index + 1}.</span><span class="${textClasses}">${option.text}</span></button>`; 
+            return `<button class="${baseClasses} ${stateClasses}" data-index="${index}" data-word="${option.vocab.w}" ${historyEntry ? 'disabled' : ''}><span class="${numberClasses}">${index + 1}.</span><span class="${textClasses}">${option.text}</span></button>`;
         }).join(''); 
         
         let feedbackHTML = '', feedbackClass = ''; 

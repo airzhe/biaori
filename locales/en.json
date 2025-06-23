@@ -24,6 +24,7 @@
     "no_words_for_practice": "No words available for practice.",
     "no_questions_generated": "Could not generate questions with the selected words.",
     "message_box_ok": "OK",
+    "confirm_exit_quiz": "Are you sure you want to exit the quiz? Your current progress will not be saved.",
     "confirm_btn": "Confirm",
     "cancel_btn": "Cancel",
     "wrong_words_modal_title": "Wrong Words Management",

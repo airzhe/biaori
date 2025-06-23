@@ -24,6 +24,7 @@
     "no_words_for_practice": "練習用の単語がありません。",
     "no_questions_generated": "選択した単語で問題を作成できませんでした。",
     "message_box_ok": "OK",
+    "confirm_exit_quiz": "この練習を終了しますか？現在の進捗は保存されません。",
     "confirm_btn": "確定",
     "cancel_btn": "キャンセル",
     "wrong_words_modal_title": "錯詞本管理",
