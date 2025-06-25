@@ -4,6 +4,7 @@
 
 /* 1. Global Variables & Theming */
 :root {
+    --body-bg-gradient: linear-gradient(135deg, #c7d2fe 0%, #e0e7ff 100%);
     --body-bg-gradient: linear-gradient(135deg,#a1c4fd,#c2e9fb);
     --body-text-color: #1f2937;
     --glass-pane-bg-fallback: rgba(255, 255, 255, 0.45);
@@ -42,12 +43,12 @@ body.dark {
     --glass-control-border: rgba(55, 65, 81, 0.6);
     --glass-control-hover-bg: rgba(55, 65, 81, 0.5);
     --glass-control-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --gradient-text-bg: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+    --gradient-text-bg: linear-gradient(45deg,#3b82f6,#8b5cf6,#ec4899);
     --progress-bar-bg: rgba(17, 24, 39, 0.8);
     --feedback-green-text: #22c55e;
     --feedback-red-text: #f87171;
     --feedback-green-bg: #166534;
-    --feedback-red-bg: #991b1b;
+    --feedback-red-bg: #991B1B;
     --accent-color: #6366f1;
     --selected-option-bg: #4f46e5;
     --selected-option-text: #e0e7ff;
@@ -106,7 +107,7 @@ body.dark {
     color: #ef4444;
 }
 
-body.dark .wwm-delete-btn:hover {
+.dark .wwm-delete-btn:hover {
     background-color: #452323;
     color: #f87171;
 }
@@ -552,6 +553,7 @@ body.dark #wrongWordsModal>div {
     animation: move 2s linear infinite;
 }
 
+/* [移除] 不再需要 tab-button 样式，因为相关功能已被删除 */
 
 /* Animations & Misc */
 @keyframes pulse {
@@ -731,9 +733,13 @@ body.dark #wrongWordsModal>div {
     transition: background-color 0.3s ease;
 }
 
+.rounded-full{
+    border-radius: 9999px;
+}
+
+
 #messageBoxButtons button {
     min-width: 100px;
-    border-radius: 9999px;
 }
 
 
@@ -825,7 +831,7 @@ body.dark #wrongWordsModal>div {
         min-height: 44px;
         padding: .75rem 1rem;
     }
-
+    /*
     .option {
         min-height: 48px;
         padding: 1rem;
@@ -833,7 +839,7 @@ body.dark #wrongWordsModal>div {
 
     .options {
         gap: 1rem;
-    }
+    }*/
 }
 
 /* High DPI displays */
