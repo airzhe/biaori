@@ -4,7 +4,6 @@
 
 /* 1. Global Variables & Theming */
 :root {
-    --body-bg-gradient: linear-gradient(135deg, #c7d2fe 0%, #e0e7ff 100%);
     --body-bg-gradient: linear-gradient(135deg,#a1c4fd,#c2e9fb);
     --body-text-color: #1f2937;
     --glass-pane-bg-fallback: rgba(255, 255, 255, 0.45);
@@ -43,12 +42,12 @@ body.dark {
     --glass-control-border: rgba(55, 65, 81, 0.6);
     --glass-control-hover-bg: rgba(55, 65, 81, 0.5);
     --glass-control-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --gradient-text-bg: linear-gradient(45deg,#3b82f6,#8b5cf6,#ec4899);
+    --gradient-text-bg: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
     --progress-bar-bg: rgba(17, 24, 39, 0.8);
     --feedback-green-text: #22c55e;
     --feedback-red-text: #f87171;
     --feedback-green-bg: #166534;
-    --feedback-red-bg: #991B1B;
+    --feedback-red-bg: #991b1b;
     --accent-color: #6366f1;
     --selected-option-bg: #4f46e5;
     --selected-option-text: #e0e7ff;
@@ -107,7 +106,7 @@ body.dark {
     color: #ef4444;
 }
 
-.dark .wwm-delete-btn:hover {
+body.dark .wwm-delete-btn:hover {
     background-color: #452323;
     color: #f87171;
 }
@@ -553,7 +552,6 @@ body.dark #wrongWordsModal>div {
     animation: move 2s linear infinite;
 }
 
-/* [移除] 不再需要 tab-button 样式，因为相关功能已被删除 */
 
 /* Animations & Misc */
 @keyframes pulse {
@@ -733,12 +731,115 @@ body.dark #wrongWordsModal>div {
     transition: background-color 0.3s ease;
 }
 
-.rounded-full{
+#messageBoxButtons button {
+    min-width: 100px;
     border-radius: 9999px;
 }
 
-/* 也许你的按钮已经使用了 flex 布局，那就更简单了 */
-#messageBoxButtons button {
-    min-width: 100px;
-    /* 你现有的样式中可能已经有 justify-center 了，如果没有就加上 */
+
+/* Small mobile devices (max-width: 480px) */
+@media (max-width: 480px) {
+    #wrongWordsModal>div {
+        margin: .5rem;
+        max-width: calc(100vw - 1rem);
+        max-height: calc(100vh - 1rem);
+    }
+
+    #wrongWordsModal .text-xl {
+        font-size: 1.125rem;
+    }
+
+    .text-4xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .text-3xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    .text-2xl {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+
+    .text-xl {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+
+    .text-lg {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    .glass-control {
+        padding: .625rem .875rem;
+        font-size: .875rem;
+    }
+
+    .p-8 {
+        padding: 1.5rem;
+    }
+
+    .p-10 {
+        padding: 2rem;
+    }
+
+    .mb-8 {
+        margin-bottom: 1.5rem;
+    }
+
+    .mb-5 {
+        margin-bottom: 1rem;
+    }
+
+    .gap-4 {
+        gap: .75rem;
+    }
+
+    #quizContainer.immersive-active .question {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+}
+
+/* Medium mobile devices (max-width: 640px) */
+@media (max-width: 640px) {
+    #wrongWordsModal main {
+        padding: 0 1rem 1rem;
+    }
+
+    .text-4xl {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+
+    .text-3xl {
+        font-size: 1.75rem;
+        line-height: 2rem;
+    }
+
+    .glass-control {
+        min-height: 44px;
+        padding: .75rem 1rem;
+    }
+
+    .option {
+        min-height: 48px;
+        padding: 1rem;
+    }
+
+    .options {
+        gap: 1rem;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    .glass-control,
+    .glass-pane {
+        border-width: .5px;
+    }
 }
