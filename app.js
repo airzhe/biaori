@@ -320,11 +320,7 @@ const WrongWordsManager = {
     renderSummary() {
         const words = this.get();
         const summaryWords = document.getElementById('wwm-summary-words');
-        const summaryMistakes = document.getElementById('wwm-summary-mistakes');
-        const summaryNew = document.getElementById('wwm-summary-new');
         if(summaryWords) summaryWords.textContent = words.length;
-        if(summaryMistakes) summaryMistakes.textContent = words.reduce((sum, word) => sum + word.wrongCount, 0);
-        if(summaryNew) summaryNew.textContent = words.filter(w => w.masteryLevel === 'new').length;
     },
     
     renderList() {
