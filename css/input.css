@@ -4,8 +4,7 @@
 
 /* 1. Global Variables & Theming */
 :root {
-    --body-bg-gradient: linear-gradient(135deg, #c7d2fe 0%, #e0e7ff 100%);
-    --body-bg-gradient: linear-gradient(135deg,#a1c4fd,#c2e9fb);
+    --body-bg-gradient: linear-gradient(135deg, #a1c4fd, #c2e9fb);
     --body-text-color: #1f2937;
     --glass-pane-bg-fallback: rgba(255, 255, 255, 0.45);
     --glass-pane-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.3) 100%);
@@ -131,7 +130,7 @@ body {
     position: relative;
 }
 
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+@supports (backdrop-filter: blur(1px)) {
     .glass-pane {
         background: var(--glass-pane-bg);
         backdrop-filter: blur(20px);
@@ -386,7 +385,7 @@ body.quiz-mode-active main.container {
     position: relative;
 }
 
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+@supports (backdrop-filter: blur(1px)) {
     #quizContainer.immersive-active {
         background: color-mix(in srgb, var(--glass-pane-bg) 50%, transparent);
         backdrop-filter: blur(25px);
@@ -638,6 +637,16 @@ body.dark #wrongWordsModal>div {
     }
 }
 
+/* Animation for question transition */
+#question-content-area, #options {
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+#question-content-area.fade-out, #options.fade-out {
+    opacity: 0;
+    transform: translateY(-15px);
+}
+
 .loading-spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     width: 36px;
@@ -743,103 +752,83 @@ body.dark #wrongWordsModal>div {
 }
 
 
-/* Small mobile devices (max-width: 480px) */
-@media (max-width: 480px) {
-    #wrongWordsModal>div {
-        margin: .5rem;
-        max-width: calc(100vw - 1rem);
-        max-height: calc(100vh - 1rem);
-    }
-
-    #wrongWordsModal .text-xl {
-        font-size: 1.125rem;
-    }
-
-    .text-4xl {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-
-    .text-3xl {
-        font-size: 1.5rem;
-        line-height: 2rem;
-    }
-
-    .text-2xl {
-        font-size: 1.25rem;
-        line-height: 1.75rem;
-    }
-
-    .text-xl {
-        font-size: 1.125rem;
-        line-height: 1.75rem;
-    }
-
-    .text-lg {
-        font-size: 1rem;
-        line-height: 1.5rem;
-    }
-
-    .glass-control {
-        padding: .625rem .875rem;
-        font-size: .875rem;
-    }
-
-    .p-8 {
-        padding: 1.5rem;
-    }
-
-    .p-10 {
-        padding: 2rem;
-    }
-
-    .mb-8 {
-        margin-bottom: 1.5rem;
-    }
-
-    .mb-5 {
-        margin-bottom: 1rem;
-    }
-
-    .gap-4 {
-        gap: .75rem;
-    }
-
-    #quizContainer.immersive-active .question {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-}
-
-/* Medium mobile devices (max-width: 640px) */
+/* Mobile Responsive Styles */
 @media (max-width: 640px) {
+    /* Modal adjustments */
     #wrongWordsModal main {
         padding: 0 1rem 1rem;
     }
-
+    
+    /* Typography scale */
     .text-4xl {
         font-size: 2.25rem;
         line-height: 2.5rem;
     }
-
+    
     .text-3xl {
         font-size: 1.75rem;
         line-height: 2rem;
     }
-
+    
+    /* Control sizing */
     .glass-control {
         min-height: 44px;
         padding: .75rem 1rem;
     }
-    /*
-    .option {
-        min-height: 48px;
-        padding: 1rem;
-    }
+}
 
-    .options {
-        gap: 1rem;
-    }*/
+@media (max-width: 480px) {
+    /* Small modal adjustments */
+    #wrongWordsModal > div {
+        margin: .5rem;
+        max-width: calc(100vw - 1rem);
+        max-height: calc(100vh - 1rem);
+    }
+    
+    /* Typography scale for small screens */
+    #wrongWordsModal .text-xl,
+    .text-xl {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+    
+    .text-4xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+    
+    .text-3xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+    
+    .text-2xl {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+    
+    .text-lg {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    
+    /* Control and spacing adjustments */
+    .glass-control {
+        padding: .625rem .875rem;
+        font-size: .875rem;
+    }
+    
+    .p-8 { padding: 1.5rem; }
+    .p-10 { padding: 2rem; }
+    .mb-8 { margin-bottom: 1.5rem; }
+    .mb-5 { margin-bottom: 1rem; }
+    .gap-4 { gap: .75rem; }
+    
+    /* Quiz specific adjustments */
+    #quizContainer.immersive-active .question {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
 }
 
 /* High DPI displays */

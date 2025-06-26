@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Japanese vocabulary quiz application with dark theme support">
     <title data-i18n="page_title"></title>
+    <link rel="preload" href="./css/style.css" as="style">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 
 <body class="min-h-screen text-gray-800 dark:text-gray-200 relative">
 
-    <button id="themeToggleBtn" class="theme-toggle fixed top-5 right-5 glass-control flex items-center justify-center w-12 h-12 rounded-full text-2xl cursor-pointer z-50 transition-transform hover:scale-110"></button>
+    <button id="themeToggleBtn" class="theme-toggle fixed top-5 right-5 glass-control flex items-center justify-center w-12 h-12 rounded-full text-2xl cursor-pointer z-50 transition-transform hover:scale-110" aria-label="Toggle theme" title="Switch between light and dark theme"></button>
 
     <main class="container mx-auto p-5 max-w-4xl">
-        <div class="header glass-pane rounded-2xl p-8 mb-8 text-center animate-[slideDown_0.8s_ease]">
+        <header class="header glass-pane rounded-2xl p-8 mb-8 text-center animate-[slideDown_0.8s_ease]">
             <h1 id="mainTitle" class="text-4xl font-bold mb-2 gradient-text" data-i18n="header_title"></h1>
             <p class="text-gray-600 dark:text-gray-300 text-lg" data-i18n="header_subtitle"></p>
-        </div>
+        </header>
 
-        <div class="controls glass-pane rounded-xl p-5 mb-8 flex flex-wrap gap-4 items-center justify-center animate-[slideUp_0.8s_ease]">
+        <section class="controls glass-pane rounded-xl p-5 mb-8 flex flex-wrap gap-4 items-center justify-center animate-[slideUp_0.8s_ease]" aria-label="Quiz controls">
             <div class="flex items-center gap-2">
                 <label for="lessonMultiSelect" class="font-semibold text-violet-600 dark:text-violet-400" data-i18n="label_lesson"></label>
                 <div class="multi-select-container custom-select-container">
@@ -46,17 +49,17 @@
                 </div>
             </div>
             <div class="flex flex-wrap gap-2 justify-center">
-                <button id="startQuizButton" class="glass-control bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-3 px-6 disabled:opacity-60 disabled:cursor-not-allowed" disabled data-i18n="btn_start_practice"></button>
-                <button id="wrongWordsOpenBtn" class="glass-control bg-gradient-to-br from-sky-500 to-cyan-400 text-white py-3 px-6" data-i18n="btn_wrong_words_notebook"></button>
+                <button id="startQuizButton" class="glass-control bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-3 px-6 disabled:opacity-60 disabled:cursor-not-allowed" disabled data-i18n="btn_start_practice" aria-describedby="quiz-setup-help"></button>
+                <button id="wrongWordsOpenBtn" class="glass-control bg-gradient-to-br from-sky-500 to-cyan-400 text-white py-3 px-6" data-i18n="btn_wrong_words_notebook" aria-describedby="wrong-words-help"></button>
             </div>
-        </div>
+        </section>
 
-        <div id="quizContainer" class="glass-pane rounded-2xl p-10 min-h-[400px] animate-[fadeIn_0.5s_ease]"></div>
+        <section id="quizContainer" class="glass-pane rounded-2xl p-10 min-h-[400px] animate-[fadeIn_0.5s_ease]" aria-label="Quiz area" role="main"></section>
     </main>
 
-    <div id="keyboardHint" class="fixed bottom-5 right-5 bg-gray-800 text-white py-2.5 px-4 rounded-xl text-xs opacity-0 transition-opacity duration-300 z-50" data-i18n="keyboard_hint"></div>
+    <aside id="keyboardHint" class="fixed bottom-5 right-5 bg-gray-800 text-white py-2.5 px-4 rounded-xl text-xs opacity-0 transition-opacity duration-300 z-50" data-i18n="keyboard_hint" role="tooltip"></aside>
 
-    <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[70] hidden">
+    <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[70] hidden" role="dialog" aria-modal="true" aria-labelledby="messageBoxText">
         <div class="p-6 rounded-lg max-w-sm w-full text-center">
             <p id="messageBoxText" class="text-lg font-semibold mb-6 text-slate-800 dark:text-slate-200"></p>
             <div id="messageBoxButtons" class="flex justify-center gap-4"></div>
@@ -64,16 +67,16 @@
     </div>
 
     <!-- ===== WRONG WORDS MODAL (Optimized) ===== -->
-    <div id="wrongWordsModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[60] hidden">
+    <dialog id="wrongWordsModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[60] hidden" aria-labelledby="wrongWordsModalTitle">
         <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
             <!-- Modal Header -->
             <header class="p-5 flex-shrink-0">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    <h3 id="wrongWordsModalTitle" class="text-xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                         <span data-i18n="wrong_words_modal_title"></span>
                     </h3>
-                    <button id="wrongWordsCloseBtn" class="text-gray-400 dark:text-gray-300 hover:text-gray-600 dark:hover:text-gray-100 text-2xl transition-colors font-mono">✕</button>
+                    <button id="wrongWordsCloseBtn" class="text-gray-400 dark:text-gray-300 hover:text-gray-600 dark:hover:text-gray-100 text-2xl transition-colors font-mono" aria-label="Close modal">✕</button>
                 </div>
                 
                 <div class="hidden flex justify-center gap-6 text-sm text-gray-500 dark:text-gray-400 mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
@@ -117,7 +120,7 @@
                 <!-- [移除] 删除了未使用的 'tab-statistics' 容器 -->
             </main>
         </div>
-    </div>
+    </dialog>
     
     <!-- ===== WRONG WORD CARD TEMPLATE ===== -->
     <template id="wrongWordCardTemplate">
