@@ -680,7 +680,8 @@ const VocabularyApp = {
     async initializeAppBasedOnURL() { 
         const ALLOWED_LEVELS = ['n1', 'n2', 'n3', 'biaori', 'gaoji']; 
         const DEFAULT_LEVEL = 'n2'; 
-        const getLevelFromPath = () => { const path = (window.location.pathname + window.location.search).toLowerCase(); return ALLOWED_LEVELS.find(level => path.includes(`/${level}`)) || null; }; 
+        const getLevelFromPath = () => { const fullUrl = window.location.href.toLowerCase(); return ALLOWED_LEVELS.find(level => fullUrl.includes(`${level}`)) || null; }; 
+       console.log(getLevelFromPath);
         const urlParams = new URLSearchParams(window.location.search); 
         const levelFromParam = urlParams.get('level')?.toLowerCase(); 
         const levelFromPath = getLevelFromPath(); 
@@ -688,6 +689,7 @@ const VocabularyApp = {
         if (levelFromParam && ALLOWED_LEVELS.includes(levelFromParam)) { determinedLevel = levelFromParam; } 
         else if (levelFromPath) { determinedLevel = levelFromPath; } 
         this.state.currentJLPTLevel = determinedLevel.toUpperCase(); 
+        console.log(determinedLevel);
         const mainTitleKeyMap = { 'BIAORI': 'BIAORI', 'GAOJI': 'GAOJI', 'N2': 'JLPT_N2', 'N1': 'JLPT_N1', 'N3': 'JLPT_N3' }; 
         this.elements.mainTitle.textContent = _t(mainTitleKeyMap[this.state.currentJLPTLevel] || 'header_title'); 
         await this.loadVocabularyData(`./data/${determinedLevel}.json`); 
@@ -892,8 +894,8 @@ const VocabularyApp = {
                 ? `${vocab.w}<span class="text-base font-normal text-slate-500 dark:text-slate-400 ml-2">(${vocab.r})</span>`
                 : vocab.w;
             return `
-                <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border-l-4 ${borderColor} shadow-lg hover:shadow-xl transition-all duration-300 detailed-info-item cursor-pointer"
-                     data-w="${vocab.w}">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border-l-4 ${borderColor} shadow-lg hover:shadow-xl transition-all duration-300 detailed-info-item cursor-pointer block w-full mb-3"
+                     data-w="${vocab.w}" style="display: block !important; width: 100% !important; margin-bottom: 0.75rem !important;">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white pointer-events-none">${wordReadingHTML}</h3>
                         <span class="rounded-lg flex items-center justify-center bg-green-100 dark:bg-green-900/30 pointer-events-none">${icon}</span>
@@ -1027,7 +1029,14 @@ const VocabularyApp = {
         }
         if (!this.elements.body.classList.contains('quiz-mode-active') || !this.elements.wrongWordsModal.classList.contains('hidden')) return;
 
-        if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') this.navigateToPreviousQuestion();
+        if (e.key === ' ') {
+            e.preventDefault();
+            const detailedInfoPanel = this.elements.quizContainer.querySelector('#detailedInfoPanel');
+            if (detailedInfoPanel) {
+                detailedInfoPanel.classList.toggle('visible');
+            }
+        }
+        else if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a') this.navigateToPreviousQuestion();
         else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') this.navigateToNextQuestion();
         else if (e.key >= '1' && e.key <= '4' && !this.state.isInputLocked) this.submitAnswer(parseInt(e.key) - 1);
     },
